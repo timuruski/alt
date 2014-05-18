@@ -20,11 +20,16 @@ module ConvertExpectation
     end
 
     def failure_message
-      %Q(expected "#{@expected_path}", got "#{@actual_path}")
+      <<-EOS
+expected: "#{@expected_path}"
+  actual: "#{@actual_path}"
+     EOS
     end
   end
 end
 
 RSpec.configure do |config|
+  config.formatter = 'documentation'
   config.include(ConvertExpectation)
+  config.order ='random'
 end

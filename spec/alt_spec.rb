@@ -22,4 +22,12 @@ describe "alt" do
         .into('lib/example.rb')
     end
   end
+
+  context "with an ambiguous test path" do
+    it "returns the same path" do
+      expect('bin/alt')
+        .to convert('spec/spec_helper.rb')
+        .into('spec/spec_helper.rb')
+    end
+  end
 end

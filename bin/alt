@@ -5,8 +5,10 @@ require 'pathname'
 path = Pathname.new(ARGV[0])
 extname = path.extname
 
-if path.to_s =~ %r{spec/}
+if path.to_s =~ %r{_spec}
   puts path.sub('spec', 'lib').sub('_spec', '')
-else
+elsif path.to_s =~ %r{lib/}
   puts path.sub('lib', 'spec').sub_ext('_spec' + extname)
+else
+  puts path
 end
