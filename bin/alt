@@ -2,13 +2,17 @@
 
 require 'pathname'
 
-path = Pathname.new(ARGV[0])
-extname = path.extname
+SPEC_FILE = /_spec\./
+SOURCE_PATH = %r{(app|lib)/}
 
-if path.to_s =~ %r{_spec}
-  puts path.sub('spec', 'lib').sub('_spec', '')
-elsif path.to_s =~ %r{lib/}
-  puts path.sub('lib', 'spec').sub_ext('_spec' + extname)
+path = ARGV[0]
+extname = File.extname(path)
+
+case path
+when SPEC_FILE
+  puts Pathname.new(path).sub('spec', 'lib').sub('_spec', '')
+when SOURCE_PATH
+  puts Pathname.new(path).sub(/app|lib/, 'spec').sub_ext('_spec' + extname)
 else
   puts path
 end

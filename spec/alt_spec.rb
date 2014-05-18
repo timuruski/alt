@@ -1,33 +1,39 @@
 require_relative 'spec_helper'
 
-describe "alt" do
-  context "with a source path in lib/" do
-    it "returns a path to the test file" do
-      expect('bin/alt')
-        .to convert('lib/example.rb')
-        .into('spec/example_spec.rb')
-    end
+describe "bin/alt" do
+  subject { 'bin/alt' }
 
-    it "doesn't mess with the extension" do
-      expect('bin/alt')
-        .to convert('lib/example.py')
-        .into('spec/example_spec.py')
-    end
+  context "relative source paths" do
+    converts('lib/example.rb')
+      .into('spec/example_spec.rb')
+
+    converts('lib/example.py')
+      .into('spec/example_spec.py')
+
+    converts('app/models/user.rb')
+      .into('spec/models/user_spec.rb')
   end
 
-  context "with a test path" do
-    it "returns a path to the source file in lib" do
-      expect('bin/alt')
-        .to convert('spec/example_spec.rb')
-        .into('lib/example.rb')
-    end
+  context "relative test paths" do
+    ignores('spec/spec_helper.rb')
+
+    converts('spec/example_spec.rb')
+      .into('lib/example.rb')
+
+    converts('spec/example_spec.py')
+      .into('lib/example.py')
+
+    # converts('spec/models/user_spec.rb')
+    #   .into('app/models/user.rb')
   end
 
-  context "with an ambiguous test path" do
-    it "returns the same path" do
-      expect('bin/alt')
-        .to convert('spec/spec_helper.rb')
-        .into('spec/spec_helper.rb')
-    end
+  context "absolute source paths" do
+    converts('/workspace/example/lib/example.rb')
+      .into('/workspace/example/spec/example_spec.rb')
+  end
+
+  context "absolute test paths" do
+    converts('/workspace/example/spec/example_spec.rb')
+      .into('/workspace/example/lib/example.rb')
   end
 end
