@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+class AltPath
+  def initialize(path)
+    @path = Pathname.new(path)
+  end
+
+  def to_s
+    dirname = @path.dirname
+    extname = @path.extname
+    basename = @path.basename(extname).to_s + '_spec' + extname
+    (dirname.sub('lib', 'spec') + basename).to_s
+  end
+end
+
+STDOUT.puts AltPath.new(ARGV[0])
