@@ -1,6 +1,7 @@
 ALT
 
-A tiny tool for converting between source and test file.
+A tiny tool for converting between source and test file. The following
+convention is applied to all transformations.
 
     $ alt lib/alt/example.rb
     > spec/alt/example_spec.rb
@@ -8,7 +9,10 @@ A tiny tool for converting between source and test file.
     $ alt spec/alt/example_spec.rb
     > lib/alt/example.rb
 
-TODO
+Alt doesn't care whether a file exists, since you might be jumping from
+source into a test file that doesn't exist, or vice versa.
+
+TODO:
 
 - handle test-unit naming style, test_example.rb
 - ignore app/ directory same as lib/
