@@ -2,6 +2,8 @@
 
 require 'pathname'
 
+APP_DIRS = '(models|views|controlers|helpers)'
+APP_SPEC_FILE = %r(#{APP_DIRS}/.+_spec\.)
 SPEC_FILE = /_spec\./
 SOURCE_PATH = %r{(app|lib)/}
 
@@ -9,6 +11,8 @@ path = ARGV[0]
 extname = File.extname(path)
 
 case path
+when APP_SPEC_FILE
+  puts Pathname.new(path).sub('spec', 'app').sub('_spec', '')
 when SPEC_FILE
   puts Pathname.new(path).sub('spec', 'lib').sub('_spec', '')
 when SOURCE_PATH

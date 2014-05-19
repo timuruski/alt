@@ -27,8 +27,8 @@ describe "bin/alt" do
     it { should take('spec/example_spec.py')
            .and_resolve('lib/example.py') }
 
-    # it { should take('spec/models/user_spec.rb')
-    #        .and_resolve('app/models/user.rb') }
+    it { should take('spec/models/user_spec.rb')
+           .and_resolve('app/models/user.rb') }
   end
 
   context "absolute source paths" do
