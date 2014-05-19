@@ -4,36 +4,40 @@ describe "bin/alt" do
   subject { 'bin/alt' }
 
   context "relative source paths" do
-    converts('lib/example.rb')
-      .into('spec/example_spec.rb')
+    it { should take('lib/example.rb')
+           .and_resolve('spec/example_spec.rb') }
 
-    converts('lib/example.py')
-      .into('spec/example_spec.py')
+    it { should take('lib/example.rb')
+           .and_resolve('spec/example_spec.rb') }
 
-    converts('app/models/user.rb')
-      .into('spec/models/user_spec.rb')
+    it { should take('lib/example.py')
+           .and_resolve('spec/example_spec.py') }
+
+    it { should take('app/models/user.rb')
+           .and_resolve('spec/models/user_spec.rb') }
   end
 
   context "relative test paths" do
-    ignores('spec/spec_helper.rb')
+    it { should take('spec/spec_helper.rb')
+           .and_resolve('spec/spec_helper.rb') }
 
-    converts('spec/example_spec.rb')
-      .into('lib/example.rb')
+    it { should take('spec/example_spec.rb')
+           .and_resolve('lib/example.rb') }
 
-    converts('spec/example_spec.py')
-      .into('lib/example.py')
+    it { should take('spec/example_spec.py')
+           .and_resolve('lib/example.py') }
 
-    # converts('spec/models/user_spec.rb')
-    #   .into('app/models/user.rb')
+    # it { should take('spec/models/user_spec.rb')
+    #        .and_resolve('app/models/user.rb') }
   end
 
   context "absolute source paths" do
-    converts('/workspace/example/lib/example.rb')
-      .into('/workspace/example/spec/example_spec.rb')
+    it { should take('/workspace/example/lib/example.rb')
+           .and_resolve('/workspace/example/spec/example_spec.rb') }
   end
 
   context "absolute test paths" do
-    converts('/workspace/example/spec/example_spec.rb')
-      .into('/workspace/example/lib/example.rb')
+    it { should take('/workspace/example/spec/example_spec.rb')
+           .and_resolve('/workspace/example/lib/example.rb') }
   end
 end
